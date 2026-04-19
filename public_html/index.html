@@ -1,0 +1,3060 @@
+<!-- 
+  =============================================================================
+  PROYECTO FREELANCE: PELUDITOS Y AMOROSITOS (Producción - Hostinger)
+  Desarrollado a medida como estudiante de 7mo Semestre (Sistemas).
+  Tecnologías: CSS Nativo, Vanilla JS, PHP (API REST).
+  =============================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta tags básicos para responsividad (Mobile-First) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peluditos y Amorositos — Tienda & Clínica Veterinaria</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    :root {
+      --cream: #eef9fa;
+      --warm-white: #f5fdfd;
+      --sage: #25abb2;
+      --sage-dark: #0d7c86;
+      --sage-light: #a8dfe3;
+      --terra: #0a6670;
+      --charcoal: #2C2C2C;
+      --mid: #6B6B6B;
+      --light: #A8A8A8;
+      --border: #c8e8eb;
+      --card-bg: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(249, 244, 236, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--sage-dark);
+    }
+
+    .logo-img {
+      height: 60px;
+      width: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #fff;
+      padding: 0;
+      box-shadow: 0 4px 16px rgba(13, 124, 134, 0.25);
+      border: 2px solid var(--sage-light);
+      transition: transform 0.3s, box-shadow 0.3s;
+      flex-shrink: 0;
+    }
+
+    .nav-logo:hover .logo-img {
+      transform: rotate(-6deg) scale(1.08);
+      box-shadow: 0 8px 24px rgba(13, 124, 134, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--mid);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--charcoal);
+    }
+
+    .nav-cta {
+      background: var(--sage-dark);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--sage);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      padding: 68px 5% 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%);
+      opacity: 0.35;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-label {
+      display: inline-block;
+      background: var(--sage-light);
+      color: var(--sage-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+      position: relative;
+    }
+
+    /* ===== HUELLAS FLOTANTES DECORATIVAS ===== */
+    .paw-deco {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.06;
+      pointer-events: none;
+      animation: pawFloat var(--dur, 6s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes pawFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(var(--rot, 0deg));
+        opacity: 0.06;
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(calc(var(--rot, 0deg) + 10deg));
+        opacity: 0.1;
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--sage-dark), #10a2ac, var(--terra), var(--sage-dark));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--mid);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .btn-primary {
+      background: var(--sage-dark);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(13, 124, 134, 0.4);
+      animation: glowPulse 3s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(13, 124, 134, 0.5);
+      animation: none;
+    }
+
+    @keyframes glowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 15px rgba(13, 124, 134, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 28px rgba(13, 124, 134, 0.7);
+      }
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+      border: 1.5px solid var(--border);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--sage-dark);
+      color: var(--sage-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(13, 124, 134, 0.15);
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .hero-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .hero-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .hero-card:first-child {
+      background: var(--sage-dark);
+      color: #fff;
+    }
+
+    .hero-card:first-child p {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    .hero-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+
+    .hero-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card p {
+      font-size: 0.82rem;
+      opacity: 0.75;
+      line-height: 1.5;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .stat strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--sage-dark);
+      display: block;
+      background: linear-gradient(135deg, var(--sage-dark), #10a2ac);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat span {
+      font-size: 0.8rem;
+      color: var(--mid);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 5%;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: var(--sage-light);
+      color: var(--sage-dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-label::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: labelShimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes labelShimmer {
+      0% {
+        left: -100%;
+      }
+
+      40%,
+      100% {
+        left: 200%;
+      }
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--mid);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    /* PRODUCTOS (Catálogo con Búsqueda y Paginación) */
+    #productos {
+      background: var(--warm-white);
+    }
+
+    .tools-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .categories {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 280px;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--sage-dark);
+      box-shadow: 0 0 0 4px rgba(13, 124, 134, 0.1);
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      opacity: 0.5;
+    }
+
+    .cat-btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--mid);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active,
+    .cat-btn:hover {
+      background: var(--sage-dark);
+      border-color: var(--sage-dark);
+      color: #fff;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s;
+      animation: cardEntrance 0.5s ease both;
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(13, 124, 134, 0.15);
+      border-color: var(--sage-light);
+    }
+
+    /* IMÁGENES DE PRODUCTOS – CUADRADO PERFECTO SIN ESPACIOS VACÍOS */
+    .product-img-container {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #f8f8f8;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .product-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-img-container img {
+      transform: scale(1.06);
+    }
+
+    .product-info {
+      padding: 1.2rem;
+      text-align: center;
+    }
+
+    .product-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sage-dark);
+      background: var(--sage-light);
+      padding: 3px 10px;
+      border-radius: 50px;
+      margin-bottom: 0.6rem;
+    }
+
+    .product-info h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    /* PAGINACIÓN */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .page-btn {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      color: var(--mid);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .page-btn.active {
+      background: var(--sage-dark);
+      color: #fff;
+      border-color: var(--sage-dark);
+    }
+
+    .page-btn:hover:not(.active):not(:disabled) {
+      border-color: var(--sage-dark);
+      color: var(--charcoal);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* VETERINARIA */
+    #veterinaria {
+      background: var(--charcoal);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #veterinaria::before {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -5%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, var(--sage-dark) 0%, transparent 65%);
+      opacity: 0.15;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .vet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .vet-content .section-label {
+      background: rgba(184, 212, 187, 0.2);
+      color: var(--sage-light);
+    }
+
+    .vet-content .section-title {
+      color: #fff;
+    }
+
+    .vet-content .section-sub {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .vet-services {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .vet-service {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.2rem;
+      transition: background 0.2s;
+    }
+
+    .vet-service:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .vet-service .ico {
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .vet-service h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .vet-service p {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.5;
+    }
+
+    .vet-big-card {
+      background: linear-gradient(135deg, var(--sage-dark), #065962);
+      border-radius: 24px;
+      padding: 2.5rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vet-big-card::after {
+      content: '🐾';
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      font-size: 8rem;
+      opacity: 0.08;
+      transform: rotate(15deg);
+    }
+
+    .vet-big-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .vet-big-card p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .vet-doc {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .vet-doc .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .vet-doc .avatar.a1 {
+      background: #1a8f98;
+    }
+
+    .vet-doc .info strong {
+      font-size: 0.88rem;
+      display: block;
+    }
+
+    .vet-doc .info span {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .vet-hours {
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 1.3rem;
+      margin-top: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .vet-hours h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .hour-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      align-items: center;
+    }
+
+    .hour-row:last-child {
+      border-bottom: none;
+    }
+
+    .hour-row .day {
+      opacity: 0.6;
+    }
+
+    .hour-row .time {
+      text-align: right;
+    }
+
+    /* CITAS */
+    #citas {
+      background: var(--cream);
+    }
+
+    .appointment-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    }
+
+    .appt-header {
+      background: linear-gradient(135deg, var(--sage-dark) 0%, #065962 100%);
+      padding: 2.5rem 3rem;
+      color: #fff;
+    }
+
+    .appt-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .appt-header p {
+      opacity: 0.75;
+      font-size: 0.9rem;
+    }
+
+    .appt-steps {
+      display: flex;
+    }
+
+    .step-tab {
+      flex: 1;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 3px solid transparent;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.2s;
+    }
+
+    .step-tab.active {
+      color: #fff;
+      border-bottom-color: #fff;
+    }
+
+    .step-tab.done {
+      color: rgba(255, 255, 255, 0.8);
+      border-bottom-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .appt-body {
+      padding: 3rem;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-opt {
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .service-opt:hover {
+      border-color: var(--sage);
+    }
+
+    .service-opt.selected {
+      border-color: var(--sage-dark);
+      background: #e5f7f8;
+    }
+
+    .service-opt .sico {
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .service-opt h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .service-opt p {
+      font-size: 0.8rem;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+
+    .cal-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .calendar {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 1.5rem;
+    }
+
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .cal-nav button {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--charcoal);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .cal-nav button:hover {
+      background: var(--border);
+    }
+
+    .cal-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+
+    .cal-day-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--light);
+      text-transform: uppercase;
+      padding: 6px 0;
+    }
+
+    .cal-day {
+      padding: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+      border: 1.5px solid transparent;
+    }
+
+    .cal-day:hover:not(.empty):not(.past) {
+      background: var(--sage-light);
+    }
+
+    .cal-day.selected {
+      background: var(--sage-dark);
+      color: #fff;
+    }
+
+    .cal-day.today {
+      border-color: var(--sage-dark);
+      font-weight: 700;
+    }
+
+    .cal-day.empty {
+      cursor: default;
+    }
+
+    .cal-day.past {
+      color: var(--light);
+      cursor: not-allowed;
+    }
+
+    .cal-day.has-slots::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: var(--sage);
+      border-radius: 50%;
+      margin: 2px auto 0;
+    }
+
+    .cal-day.selected::after {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .time-slots h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--mid);
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .slot {
+      padding: 10px 8px;
+      text-align: center;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.15s;
+      background: #fff;
+    }
+
+    .slot:hover:not(.unavailable) {
+      border-color: var(--sage);
+      background: #e5f7f8;
+    }
+
+    .slot.selected {
+      background: var(--sage-dark);
+      border-color: var(--sage-dark);
+      color: #fff;
+    }
+
+    .slot.unavailable {
+      background: var(--cream);
+      color: var(--light);
+      cursor: not-allowed;
+      border-style: dashed;
+    }
+
+    .appt-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--mid);
+      letter-spacing: 0.3px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      background: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--sage-dark);
+      box-shadow: 0 0 0 3px rgba(13, 124, 134, 0.1);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .appointment-summary {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 1.4rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .summary-item .lbl {
+      font-size: 0.75rem;
+      color: var(--mid);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .summary-item .val {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .summary-sep {
+      color: var(--border);
+      font-size: 1.2rem;
+    }
+
+    .confirm-screen {
+      text-align: center;
+      padding: 2rem 0;
+      display: none;
+    }
+
+    .confirm-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--sage-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.5rem;
+      animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .confirm-screen h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .confirm-screen p {
+      color: var(--mid);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto 2rem;
+    }
+
+    .confirm-details {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-width: 440px;
+      margin: 0 auto 2rem;
+      text-align: left;
+    }
+
+    .confirm-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .confirm-row:last-child {
+      border-bottom: none;
+    }
+
+    .confirm-row .key {
+      color: var(--mid);
+    }
+
+    .confirm-row .val {
+      font-weight: 600;
+    }
+
+    .appt-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-back {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--mid);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--charcoal);
+      color: var(--charcoal);
+    }
+
+    .btn-next {
+      background: var(--sage-dark);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .btn-next:hover {
+      background: var(--sage);
+    }
+
+    .btn-next:disabled {
+      background: var(--light);
+      cursor: not-allowed;
+    }
+
+    /* NOSOTROS */
+    #nosotros {
+      background: var(--warm-white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .about-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .about-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .about-card:first-child {
+      grid-column: 1 / -1;
+      background: var(--sage-dark);
+      color: #fff;
+    }
+
+    .about-card .ico {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .about-card strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .about-card span {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .about-content .section-sub {
+      margin-bottom: 2rem;
+    }
+
+    .values-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .values-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .values-list li::before {
+      content: '✓';
+      width: 26px;
+      height: 26px;
+      background: var(--sage-light);
+      color: var(--sage-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 4rem 5% 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .footer-col ul a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-logo span {
+      color: var(--sage-light);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      background: var(--charcoal);
+      color: #fff;
+      padding: 1rem 1.4rem;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      transform: translateY(6rem);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .no-date {
+      color: var(--mid);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      opacity: 0.7;
+      grid-column: 1 / -1;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
+
+    @keyframes pulse-ring-teal {
+      0% {
+        box-shadow: 0 0 0 0 rgba(13, 124, 134, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 18px rgba(13, 124, 134, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(13, 124, 134, 0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      70% {
+        transform: scale(0.9);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* ===== ANIMACIONES DE SCROLL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ===== CHATBOT MASCOTA WHATSAPP ===== */
+    .wa-chatbot {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .wa-bubble {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px 18px 4px 18px;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      max-width: 220px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+      animation: slideInRight 0.5s ease both;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .wa-bubble.show {
+      display: block;
+    }
+
+    .wa-btn {
+      width: 68px;
+      height: 68px;
+      background: linear-gradient(135deg, #0d7c86, #25abb2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(13, 124, 134, 0.5);
+      animation: float 3s ease-in-out infinite, pulse-ring-teal 2.5s ease-in-out infinite;
+      transition: transform 0.2s;
+      text-decoration: none;
+      border: 3px solid #fff;
+      position: relative;
+    }
+
+    .wa-btn:hover {
+      transform: scale(1.1);
+      animation: none;
+    }
+
+    .wa-mascot-face {
+      font-size: 2.2rem;
+      line-height: 1;
+      display: block;
+    }
+
+    .wa-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: #ff4444;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 0.6rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .wa-label {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.68rem;
+      font-family: 'DM Sans', sans-serif;
+      color: #fff;
+      white-space: nowrap;
+      font-weight: 700;
+      background: #0d7c86;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(13, 124, 134, 0.4);
+    }
+
+    /* ===== FOTO VETERINARIO ===== */
+    .vet-doc .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .vet-doc .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* MEDIA QUERIES EXISTENTES */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: calc(68px + 2rem);
+        min-height: auto;
+        padding-bottom: 4rem;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .vet-grid,
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cal-wrap,
+      .appt-form,
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .tools-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-box {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .appt-body {
+        padding: 1.5rem;
+      }
+
+      .appt-header {
+        padding: 1.5rem 2rem;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      section {
+        padding: 4rem 5%;
+      }
+    }
+
+    /* ========== OPTIMIZACIONES ADICIONALES PARA MÓVIL (NUEVAS) ========== */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      section {
+        padding: 3rem 5%;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .section-sub {
+        font-size: 0.9rem;
+        max-width: 100%;
+      }
+
+      /* Hero */
+      .hero {
+        padding-top: 80px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+        letter-spacing: -0.5px;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        justify-content: center;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+      }
+
+      .hero-stats .stat strong {
+        font-size: 1.5rem;
+      }
+
+      .hero-stats .stat span {
+        font-size: 0.75rem;
+      }
+
+      .hero-card-grid {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .hero-card {
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .hero-card .emoji {
+        font-size: 1.8rem;
+      }
+
+      .hero-card h3 {
+        font-size: 0.9rem;
+      }
+
+      .hero-card p {
+        font-size: 0.75rem;
+      }
+
+      /* Productos */
+      .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+      .product-img-container {
+        aspect-ratio: 1 / 1;
+        height: auto;
+      }
+
+      .product-info {
+        padding: 0.8rem;
+      }
+
+      .product-info h3 {
+        font-size: 0.8rem;
+      }
+
+      .product-tag {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+      }
+
+      .tools-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .categories {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .search-box {
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .search-box input {
+        font-size: 0.85rem;
+        padding: 10px 16px 10px 40px;
+      }
+
+      /* Veterinaria */
+      .vet-grid {
+        gap: 2rem;
+      }
+
+      .vet-content {
+        text-align: center;
+      }
+
+      .vet-services {
+        grid-template-columns: 1fr;
+      }
+
+      .vet-service {
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .vet-service .ico {
+        font-size: 1.4rem;
+      }
+
+      .vet-service h4 {
+        font-size: 0.85rem;
+      }
+
+      .vet-service p {
+        font-size: 0.7rem;
+      }
+
+      .vet-big-card {
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .vet-big-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .vet-doc {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+      }
+
+      .vet-doc .info {
+        text-align: center;
+      }
+
+      .hour-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.2rem;
+      }
+
+      .hour-row .time {
+        text-align: center;
+      }
+
+      /* Citas */
+      .appt-header {
+        padding: 1.5rem;
+      }
+
+      .appt-header h2 {
+        font-size: 1.3rem;
+      }
+
+      .appt-header p {
+        font-size: 0.8rem;
+      }
+
+      .step-tab {
+        font-size: 0.7rem;
+        padding: 0.6rem 0;
+      }
+
+      .appt-body {
+        padding: 1.5rem;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .service-opt {
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .service-opt .sico {
+        font-size: 1.5rem;
+      }
+
+      .service-opt h4 {
+        font-size: 0.9rem;
+      }
+
+      .service-opt p {
+        font-size: 0.75rem;
+      }
+
+      .cal-wrap {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .calendar {
+        padding: 1rem;
+      }
+
+      .cal-day {
+        padding: 4px;
+        font-size: 0.7rem;
+      }
+
+      .cal-day-name {
+        font-size: 0.6rem;
+      }
+
+      .time-slots h4 {
+        font-size: 0.8rem;
+      }
+
+      .slots-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+      }
+
+      .slot {
+        padding: 6px 2px;
+        font-size: 0.7rem;
+      }
+
+      .appt-form {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .form-field label {
+        font-size: 0.75rem;
+      }
+
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+      }
+
+      .appointment-summary {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.4rem;
+        padding: 1rem;
+      }
+
+      .summary-sep {
+        display: none;
+      }
+
+      .summary-item .lbl {
+        font-size: 0.7rem;
+      }
+
+      .summary-item .val {
+        font-size: 0.8rem;
+      }
+
+      .btn-next,
+      .btn-back,
+      .btn-primary {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+      }
+
+      .confirm-details {
+        padding: 1rem;
+        max-width: 100%;
+      }
+
+      .confirm-row {
+        font-size: 0.8rem;
+      }
+
+      /* Nosotros */
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .about-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .about-card {
+        padding: 1rem;
+      }
+
+      .about-card .ico {
+        font-size: 1.6rem;
+      }
+
+      .about-card strong {
+        font-size: 0.85rem;
+      }
+
+      .about-card span {
+        font-size: 0.75rem;
+      }
+
+      .values-list li {
+        font-size: 0.85rem;
+        text-align: left;
+      }
+
+      /* Footer */
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .footer-brand p {
+        max-width: 100%;
+      }
+
+      .footer-col h4 {
+        font-size: 0.8rem;
+      }
+
+      .footer-col ul a {
+        font-size: 0.75rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+      }
+
+      .footer-logo {
+        font-size: 1.2rem;
+      }
+
+      /* Navegación */
+      nav {
+        padding: 0 4%;
+      }
+
+      .nav-logo {
+        font-size: 1rem;
+      }
+
+      .nav-logo .logo-img {
+        height: 48px;
+        width: 48px;
+        border-width: 1.5px;
+      }
+
+      .nav-cta {
+        padding: 5px 12px;
+        font-size: 0.7rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero-label {
+        font-size: 0.65rem;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+
+      .product-img-container {
+        aspect-ratio: 1 / 1;
+        height: auto;
+      }
+
+      .product-info h3 {
+        font-size: 0.7rem;
+      }
+
+      .cal-day {
+        padding: 2px;
+        font-size: 0.65rem;
+      }
+
+      .slot {
+        font-size: 0.6rem;
+      }
+
+      .step-tab {
+        font-size: 0.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <img src="images/Logo.svg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+      Peluditos y<span> Amorositos</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#veterinaria">Veterinaria</a></li>
+      <li><a href="#citas">Citas</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('citas').scrollIntoView({behavior:'smooth'})">Agendar
+      Cita</button>
+  </nav>
+
+  <section class="hero">
+    <!-- Huellas decorativas -->
+    <span class="paw-deco" style="top:15%; right:12%; --rot:20deg; --dur:7s; --delay:0s">🐾</span>
+    <span class="paw-deco" style="top:65%; right:5%; --rot:-15deg; --dur:5s; --delay:1s">🐾</span>
+    <span class="paw-deco" style="top:40%; right:30%; --rot:35deg; --dur:8s; --delay:2s">🐾</span>
+    <span class="paw-deco" style="top:80%; right:45%; --rot:-5deg; --dur:6s; --delay:0.5s">🐾</span>
+    <div class="hero-content">
+      <div class="hero-label">🐾 Tienda & Clínica Veterinaria</div>
+      <h1>Cuidamos a tu<br>mascota con <em>amor</em></h1>
+      <p>Todo lo que tu compañero necesita en un solo lugar: productos de calidad, nutrición especializada y atención
+        veterinaria profesional.</p>
+      <div class="hero-btns">
+        <a href="#productos" class="btn-primary">Ver Productos</a>
+        <a href="#citas" class="btn-outline">Agendar Cita →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong id="stat1" data-target="300">+300</strong><span>Productos</span></div>
+        <div class="stat"><strong id="stat2" data-target="1000">+1K</strong><span>Mascotas atendidas</span></div>
+        <div class="stat"><strong data-target="2">2 años</strong><span>De experiencia</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-grid">
+        <div class="hero-card">
+          <span class="emoji">🏪</span>
+          <h3>Tienda Completa</h3>
+          <p>Alimentos premium, accesorios, juguetes y más para perros, gatos y otras mascotas.</p>
+        </div>
+        <div class="hero-card">
+          <span class="emoji">🩺</span>
+          <h3>Consultas</h3>
+          <p>Atención preventiva y diagnóstico con profesionales certificados.</p>
+        </div>
+        <div class="hero-card">
+          <span class="emoji">💉</span>
+          <h3>Vacunas</h3>
+          <p>Plan de vacunación completo y actualizado para tu mascota.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="productos">
+    <div style="margin-bottom:2rem" class="reveal">
+      <div class="section-label">Catálogo</div>
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-sub">Marcas de calidad para la salud y felicidad de tu mascota.</p>
+    </div>
+
+    <div class="tools-bar">
+      <div class="categories">
+        <button class="cat-btn active" onclick="setCategory(this, 'all')">Todos</button>
+        <button class="cat-btn" onclick="setCategory(this, 'perro')">🐶 Perros</button>
+        <button class="cat-btn" onclick="setCategory(this, 'gato')">🐱 Gatos</button>
+        <button class="cat-btn" onclick="setCategory(this, 'medicamentos')">💊 Medicamentos</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar producto por nombre..."
+          oninput="handleSearch(this.value)">
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <section id="veterinaria">
+    <div class="vet-grid">
+      <div class="vet-content reveal-left">
+        <div class="section-label">Clínica Veterinaria</div>
+        <h2 class="section-title">Salud profesional<br>para tu mascota</h2>
+        <p class="section-sub">Contamos con profesionales experimentados para brindar la mejor atención médica integral.
+        </p>
+        <div class="vet-services">
+          <div class="vet-service"><span class="ico">🩺</span>
+            <h4>Consulta General</h4>
+            <p>Diagnóstico y revisión preventiva</p>
+          </div>
+          <div class="vet-service"><span class="ico">💉</span>
+            <h4>Vacunación</h4>
+            <p>Plan completo de inmunización</p>
+          </div>
+          <div class="vet-service"><span class="ico">🦷</span>
+            <h4>Detartraje</h4>
+            <p>Limpieza y cuidado dental profundo</p>
+          </div>
+          <div class="vet-service"><span class="ico">✂️</span>
+            <h4>Cirugía</h4>
+            <p>Procedimientos especializados</p>
+          </div>
+          <div class="vet-service"><span class="ico">💊</span>
+            <h4>Medicamentos</h4>
+            <p>Farmacia veterinaria completa</p>
+          </div>
+        </div>
+      </div>
+      <div class="vet-visual reveal-right">
+        <div class="vet-big-card">
+          <h3>Nuestro Equipo</h3>
+          <p>Atención médica liderada por especialistas apasionados y con trayectoria garantizada.</p>
+          <div class="vet-doc">
+            <div class="avatar a1"><img src="images/veterinario.jpg" alt="Dr. Luis Hernán Román"></div>
+            <div class="info">
+              <strong>Dr. Luis Hernán Román</strong>
+              <span>Md. Veterinario Zootecnista (U. De Caldas)<br>45 años de experiencia</span>
+            </div>
+          </div>
+        </div>
+        <div class="vet-hours">
+          <h4>Horarios de Atención</h4>
+          <div class="hour-row">
+            <span class="day">Lunes a Sábado</span>
+            <span class="time">8:30 AM — 12:30 PM<br>2:00 PM — 7:30 PM</span>
+          </div>
+          <div class="hour-row">
+            <span class="day">Domingos y festivos</span>
+            <span class="time">8:30 AM — 11:30 AM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="citas">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="section-label">Reserva en línea</div>
+      <h2 class="section-title">Agenda tu Cita</h2>
+      <p class="section-sub" style="margin:0 auto">Elige el servicio, selecciona fecha y hora, y completa tus datos.
+        ¡Así de fácil!</p>
+    </div>
+    <div class="appointment-wrapper">
+      <div class="appt-header">
+        <h2>Nueva Cita Veterinaria</h2>
+        <p>Proceso rápido en 3 pasos</p>
+        <div class="appt-steps">
+          <div class="step-tab active" id="tab1">1. Servicio</div>
+          <div class="step-tab" id="tab2">2. Fecha &amp; Hora</div>
+          <div class="step-tab" id="tab3">3. Tus Datos</div>
+        </div>
+      </div>
+      <div class="appt-body">
+
+        <div id="step1">
+          <div class="service-grid">
+            <div class="service-opt" onclick="selectService(this,'Consulta General')">
+              <span class="sico">🩺</span>
+              <h4>Consulta General</h4>
+              <p>Revisión completa del estado de salud con diagnóstico profesional.</p>
+            </div>
+            <div class="service-opt" onclick="selectService(this,'Vacunación')">
+              <span class="sico">💉</span>
+              <h4>Vacunación</h4>
+              <p>Aplicación de vacunas según el plan de inmunización recomendado.</p>
+            </div>
+          </div>
+          <div class="appt-nav">
+            <div></div>
+            <button class="btn-next" id="next1" disabled onclick="goStep(2)">Siguiente →</button>
+          </div>
+        </div>
+
+        <div id="step2" style="display:none">
+          <div class="cal-wrap">
+            <div class="calendar">
+              <div class="cal-nav">
+                <button onclick="changeMonth(-1)">‹</button>
+                <span class="cal-title" id="calTitle"></span>
+                <button onclick="changeMonth(1)">›</button>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+            </div>
+            <div class="time-slots">
+              <h4 id="slotTitle">Selecciona una fecha primero</h4>
+              <div class="slots-grid" id="slotsGrid">
+                <p class="no-date">📅 Elige un día en el calendario para ver horarios disponibles.</p>
+              </div>
+            </div>
+          </div>
+          <div class="appt-nav">
+            <button class="btn-back" onclick="goStep(1)">← Atrás</button>
+            <button class="btn-next" id="next2" disabled onclick="goStep(3)">Siguiente →</button>
+          </div>
+        </div>
+
+        <div id="step3" style="display:none">
+          <div class="appointment-summary" id="apptSummary"></div>
+          <div class="appt-form">
+            <div class="form-field"><label>Nombre completo *</label><input type="text" id="f_name"
+                placeholder="Ej. María García" oninput="validateForm()"></div>
+            <div class="form-field"><label>Teléfono / Celular *</label><input type="tel" id="f_phone"
+                placeholder="Ej. 3001234567" oninput="validateForm()"></div>
+            <div class="form-field"><label>Correo electrónico *</label><input type="email" id="f_email"
+                placeholder="correo@ejemplo.com" oninput="validateForm()"></div>
+            <div class="form-field"><label>Nombre de la mascota *</label><input type="text" id="f_pet"
+                placeholder="Ej. Luna" oninput="validateForm()"></div>
+            <div class="form-field"><label>Especie</label>
+              <select id="f_species">
+                <option value="">Seleccionar...</option>
+                <option>Perro</option>
+                <option>Gato</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Raza (opcional)</label><input type="text" id="f_breed"
+                placeholder="Ej. Labrador"></div>
+            <div class="form-field full"><label>Motivo de la consulta o notas adicionales</label><textarea id="f_notes"
+                placeholder="Describe brevemente el motivo de la visita o información relevante..."></textarea></div>
+          </div>
+          <div class="appt-nav">
+            <button class="btn-back" onclick="goStep(2)">← Atrás</button>
+            <button class="btn-next" id="next3" disabled onclick="confirmAppointment()">Confirmar Cita ✓</button>
+          </div>
+        </div>
+
+        <div id="step4" class="confirm-screen">
+          <div class="confirm-icon">🎉</div>
+          <h3>¡Cita Agendada!</h3>
+          <p>Tu cita ha sido reservada exitosamente. Nos pondremos en contacto contigo pronto.</p>
+          <div class="confirm-details" id="confirmDetails"></div>
+          <button class="btn-primary" onclick="resetAppointment()">Agendar otra cita</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros">
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-cards">
+          <div class="about-card"><span class="ico">🐾</span><strong>+1,000 mascotas</strong><span>atendidas con amor y
+              cuidado profesional</span></div>
+          <div class="about-card"><span class="ico">🏆</span><strong>Calidad garantizada</strong><span>Solo las mejores
+              marcas y atención médica</span></div>
+          <div class="about-card"><span class="ico">📍</span><strong>Ubicación central</strong><span>Fácil acceso en
+              Barrio Cervantes</span></div>
+        </div>
+      </div>
+      <div class="about-content reveal-right">
+        <div class="section-label">Nuestra Historia</div>
+        <h2 class="section-title">2 años cuidando<br>lo que más amas</h2>
+        <p class="section-sub">Somos una empresa apasionada por el bienestar animal. Nacimos con la misión de ofrecer
+          atención integral que combine lo mejor de una tienda especializada con una clínica veterinaria de primer
+          nivel.</p>
+        <ul class="values-list" style="margin-top:1.5rem">
+          <li>Profesionalismo avalado por décadas de experiencia</li>
+          <li>Productos seleccionados con altos estándares de calidad</li>
+          <li>Atención personalizada para cada mascota</li>
+          <li>Precios justos y transparentes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">Peluditos y<span> Amorositos</span></span>
+        <p>Tu destino completo para el cuidado y bienestar de tus mascotas. Tienda especializada y clínica veterinaria
+          en un solo lugar.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#veterinaria">Consulta Veterinaria</a></li>
+          <li><a href="#veterinaria">Vacunación</a></li>
+          <li><a href="#veterinaria">Detartraje</a></li>
+          <li><a href="#veterinaria">Cirugía</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#">📍 Calle 36 27-75 Barrio Cervantes</a></li>
+          <li><a href="#">📞 (+57) 311 2005506</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Peluditos y Amorositos. Todos los derechos reservados.</span>
+      <span>Hecho con ❤️ para las mascotas</span>
+    </div>
+  </footer>
+
+  <!-- ===== CHATBOT MASCOTA WHATSAPP ===== -->
+  <div class="wa-chatbot" id="waChatbot">
+    <div class="wa-bubble" id="waBubble">¡Hola! 🐾 ¿Tienes alguna pregunta sobre tus mascotas? ¡Escríbenos por WhatsApp!
+    </div>
+    <div style="position:relative">
+      <a href="https://wa.me/573112005506?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Peluditos%20y%20Amorositos"
+        target="_blank" class="wa-btn" id="waBtn" aria-label="Contactar por WhatsApp">
+        <span class="wa-mascot-face">🐶</span>
+        <div class="wa-badge">1</div>
+      </a>
+      <span class="wa-label">WhatsApp</span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+
+    /**
+     * Lógica Frontend de la Aplicación.
+     * Escrita en Vanilla JS para garantizar la máxima velocidad sin frameworks.
+     */
+
+    // --- Catálogo de Productos ---
+    // Simulación de carga rápida del inventario
+    const products = [
+
+      // --- MEDICAMENTOS GENERALES (NUEVOS) ---
+      { name: 'Medicamentos Veterinarios Varios', cat: 'medicamentos', tag: 'Salud', image: 'images/1 (86).jpeg' },
+      { name: 'Farmacia Veterinaria Especializada', cat: 'medicamentos', tag: 'Salud', image: 'images/1 (87).jpeg' },
+
+      // --- ALIMENTOS PARA PERROS ---
+      { name: 'Select Super Premium Dog Pet Food (Mini/Pequenas – Salmão, ervilha & blueberry)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (29).jpeg' },
+      { name: 'BR DOG Vet Gastrointestinal', cat: 'perro', tag: 'Nutrición', image: 'images/1 (3).jpeg' },
+      { name: 'Agility Gold Cuidado Especial Piel (Grandes Adultos)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (50).jpeg' },
+      { name: 'Purina Excellent Puppy (Cachorros razas pequeñas)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (1).jpeg' },
+      { name: 'Purina Excellent Adult (Razas medianas y grandes)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (2).jpeg' },
+      { name: 'BR DOG Vet Urinary-S', cat: 'perro', tag: 'Nutrición', image: 'images/1 (4).jpeg' },
+      { name: 'BR DOG Vet Hepatic', cat: 'perro', tag: 'Nutrición', image: 'images/1 (5).jpeg' },
+      { name: 'BR DOG Vet Renal Care', cat: 'perro', tag: 'Nutrición', image: 'images/1 (6).jpeg' },
+      { name: 'Monelli Tradizionale', cat: 'perro', tag: 'Nutrición', image: 'images/1 (16).jpeg' },
+      { name: 'Monello Cães Filhote', cat: 'perro', tag: 'Nutrición', image: 'images/1 (17).jpeg' },
+      { name: 'Monello Raças Pequenas', cat: 'perro', tag: 'Nutrición', image: 'images/1 (18).jpeg' },
+      { name: 'Monello Maturezados Cães Senior', cat: 'perro', tag: 'Nutrición', image: 'images/1 (19).jpeg' },
+      { name: 'Select Super Premium Dog (Mini/Pequenas – Salmão, ervilha & blueberry)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (30).jpeg' },
+      { name: 'BR FOR DOG Pure Puppy Small Breeds', cat: 'perro', tag: 'Nutrición', image: 'images/1 (31).jpeg' },
+      { name: 'BR FOR DOG Pure Adult Small Breeds', cat: 'perro', tag: 'Nutrición', image: 'images/1 (32).jpeg' },
+      { name: 'BIDO FOR Healthy & Delicious (27% proteína)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (33).jpeg' },
+      { name: 'Agility Gold Dog (Pouches Adults)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (35).jpeg' },
+      { name: 'BR FOR DOG Pure Adult All Breeds', cat: 'perro', tag: 'Nutrición', image: 'images/1 (38).jpeg' },
+      { name: 'FUR Dog Food (Lamb Cordero)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (40).jpeg' },
+      { name: 'BROD Healthy & Delicious (Adults)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (41).jpeg' },
+      { name: 'Select Super Premium Dog Control de Peso', cat: 'perro', tag: 'Nutrición', image: 'images/1 (42).jpeg' },
+      { name: 'BIG DOG FOR Healthy Dietines (Adulto Húmedos)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (46).jpeg' },
+      { name: 'BIDO FOR Healthy & Delicious (18% proteína)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (47).jpeg' },
+      { name: 'FOR DOG (26% proteína)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (48).jpeg' },
+      { name: 'Agility Gold Cuidado Especial Piel (Pequeños Adultos)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (49).jpeg' },
+      { name: 'Agility Gold Dog (Beneficios generales)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (53).jpeg' },
+      { name: 'Chunky Pawfizable I\'m green (Pollo y cordero)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (64).jpeg' },
+      { name: 'Select Super Premium Dog Primeirá Tricão (Frango, cenoura & banana)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (65).jpeg' },
+      { name: 'Bios PRO (Adultos, 24% proteína)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (66).jpeg' },
+      { name: 'FOR Healthy Digestion Dog Food', cat: 'perro', tag: 'Nutrición', image: 'images/1 (60).jpeg' },
+      { name: '100% Pure Dog Food (Cordero y arroz integral)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (57).jpeg' },
+      { name: 'Purina ProPlan Razas Pequeñas Puppy (32% proteína, pollo)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (104).jpeg' },
+      { name: 'Purina ProPlan Razas Pequeñas Adult (1-7 años)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (91).jpeg' },
+      { name: 'Purina Excellent Adult Mantenimiento (23% proteína)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (92).jpeg' },
+      { name: 'Royal Canin Puppy Mini Indoor', cat: 'perro', tag: 'Nutrición', image: 'images/1 (96).jpeg' },
+      { name: 'Royal Canin Adult Shih Tzu', cat: 'perro', tag: 'Nutrición', image: 'images/1 (97).jpeg' },
+      { name: 'Royal Canin Adult Pomeranian', cat: 'perro', tag: 'Nutrición', image: 'images/1 (98).jpeg' },
+      { name: 'Bios Vivance ITALITY Cardiotons', cat: 'perro', tag: 'Nutrición', image: 'images/1 (99).jpeg' },
+      { name: 'Sabores de la Tierra Cordero y Pavo', cat: 'perro', tag: 'Nutrición', image: 'images/1 (102).jpeg' },
+      { name: 'Siezevidas Sabores del Mar Pescado y Camarón', cat: 'perro', tag: 'Nutrición', image: 'images/1 (103).jpeg' },
+      { name: 'Purina ProPlan Veterinary Diets EN Gastrointestinal (Canine)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (105).jpeg' },
+      { name: 'Purina ProPlan Adult (Optihealth)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (90).jpeg' },
+      { name: 'Purina ProPlan Razas Pequeñas Puppy (Otra presentación)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (88).jpeg' },
+      { name: 'Bios Vivance ITALITY (Almoad y energía)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (61).jpeg' },
+      { name: 'Agility Gold Dog (otra presentación)', cat: 'perro', tag: 'Nutrición', image: 'images/1 (62).jpeg' },
+
+      // --- ALIMENTOS PARA GATOS ---
+      { name: 'Chunky (Salmon y cordero)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (63).jpeg' },
+      { name: 'Purina Pro Plan Kitten (Gatitos hasta 12 meses) ', cat: 'gato', tag: 'Nutrición', image: 'images/1 (15).jpeg' },
+      { name: 'BR CAT Vet KidneyFunction', cat: 'gato', tag: 'Nutrición', image: 'images/1 (9).jpeg' },
+      { name: 'BR CAT Vet Urinary s/o', cat: 'gato', tag: 'Nutrición', image: 'images/1 (7).jpeg' },
+      { name: 'BR CAT Vet Renal Care', cat: 'gato', tag: 'Nutrición', image: 'images/1 (8).jpeg' },
+      { name: 'BR CAT Vet Hepatic', cat: 'gato', tag: 'Nutrición', image: 'images/1 (10).jpeg' },
+      { name: 'BR CAT Vet Weight Control', cat: 'gato', tag: 'Nutrición', image: 'images/1 (11).jpeg' },
+      { name: 'BR CAT Vet Gastrointestinal', cat: 'gato', tag: 'Nutrición', image: 'images/1 (12).jpeg' },
+      { name: 'BONNAT Veterinary Diet Renal Support', cat: 'gato', tag: 'Nutrición', image: 'images/1 (13).jpeg' },
+      { name: 'Purina ProPlan Veterinary Diets EN Gastrointestinal (Feline)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (14).jpeg' },
+      { name: 'Monello Gatos Adultos', cat: 'gato', tag: 'Nutrición', image: 'images/1 (20).jpeg' },
+      { name: 'Monello Gatos Filhotes', cat: 'gato', tag: 'Nutrición', image: 'images/1 (21).jpeg' },
+      { name: 'Monello Bolas de Pelos', cat: 'gato', tag: 'Nutrición', image: 'images/1 (22).jpeg' },
+      { name: 'Monello Gatos Castrados', cat: 'gato', tag: 'Nutrición', image: 'images/1 (23).jpeg' },
+      { name: 'Purina Cat Chow GATITOS (Pescado)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (24).jpeg' },
+      { name: 'Agility Gold Cat', cat: 'gato', tag: 'Nutrición', image: 'images/1 (25).jpeg' },
+      { name: 'Purina Cat Chow Adultos (Pescado)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (26).jpeg' },
+      { name: 'Purina Cat Chow Sunrise', cat: 'gato', tag: 'Nutrición', image: 'images/1 (27).jpeg' },
+      { name: 'Purina Cat Chow Adultos (Carne)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (28).jpeg' },
+      { name: 'Agility Gold Cat (Previene bolas de pelo)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (34).jpeg' },
+      { name: 'Agility Gold Cat Esterilizados', cat: 'gato', tag: 'Nutrición', image: 'images/1 (37).jpeg' },
+      { name: 'BR CAT Pure Kittens', cat: 'gato', tag: 'Nutrición', image: 'images/1 (39).jpeg' },
+      { name: 'Select Super Premium Cat Skin and Coat', cat: 'gato', tag: 'Nutrición', image: 'images/1 (43).jpeg' },
+      { name: 'Select Super Premium Cat Maes & Filhotes', cat: 'gato', tag: 'Nutrición', image: 'images/1 (44).jpeg' },
+      { name: 'Select Super Premium Cat Castrados', cat: 'gato', tag: 'Nutrición', image: 'images/1 (45).jpeg' },
+      { name: 'BR FOR CAT Pure Adult Cats (Salmón)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (51).jpeg' },
+      { name: 'HAAT FURA Healthy & Delicious Cat Food', cat: 'gato', tag: 'Nutrición', image: 'images/1 (52).jpeg' },
+      { name: 'BRAT FOR CATS Kitten Food', cat: 'gato', tag: 'Nutrición', image: 'images/1 (54).jpeg' },
+      { name: 'BETTY FOR FELINE CITI FOOD Adult Senior', cat: 'gato', tag: 'Nutrición', image: 'images/1 (55).jpeg' },
+      { name: 'CAT FAT FOS Cat Food', cat: 'gato', tag: 'Nutrición', image: 'images/1 (56).jpeg' },
+      { name: 'BR CAT Pure Kittens (Chicken & vegetables)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (58).jpeg' },
+      { name: 'BR CAT Puree Castrated Cats Food (Sabor pollo)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (67).jpeg' },
+      { name: 'CAT FOOD FOR BIR CATS (Salmon & mackerel, castrados)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (68).jpeg' },
+      { name: 'Purina Excellent Adult Gatos Adultos (Pollo, carne y arroz)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (70).jpeg' },
+      { name: 'Purina Excellent Urinary Basics Adultos', cat: 'gato', tag: 'Nutrición', image: 'images/1 (71).jpeg' },
+      { name: 'Royal Canin Kitten', cat: 'gato', tag: 'Nutrición', image: 'images/1 (95).jpeg' },
+      { name: 'BR CAT Pure Hairball Control (Adult Cats)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (100).jpeg' },
+      { name: 'Purina ProPlan Veterinary Diet UR (Urinary St/Ox)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (101).jpeg' },
+      { name: 'Purina ProPlan Exigent (gatos exigentes)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (89).jpeg' },
+      { name: 'Purina Excellent Sterilized (gatos castrados)', cat: 'gato', tag: 'Nutrición', image: 'images/1 (93).jpeg' },
+      { name: 'Purina Excellent Kitten', cat: 'gato', tag: 'Nutrición', image: 'images/1 (94).jpeg' },
+
+      // --- ARENAS Y ASEO ---
+      { name: 'MAIZ cat Arena ecológica para gatos', cat: 'gato', tag: 'Higiene', image: 'images/1 (73).jpeg' },
+      { name: 'Pet cat litter Arena Sanitaria para Gatos', cat: 'gato', tag: 'Higiene', image: 'images/1 (74).jpeg' },
+      { name: 'NEO CLEAN ADVANCE Multi-Cat (arena)', cat: 'gato', tag: 'Higiene', image: 'images/1 (75).jpeg' },
+      { name: 'ALPHA PLANET Cat Litter', cat: 'gato', tag: 'Higiene', image: 'images/1 (76).jpeg' },
+      { name: 'KITTEN PAW Arena Sanitaria Super Premium', cat: 'gato', tag: 'Higiene', image: 'images/1 (78).jpeg' },
+      { name: 'PELÍNINO Arena de pino biodegradable', cat: 'gato', tag: 'Higiene', image: 'images/1 (79).jpeg' },
+      { name: 'Arena para gatos (genérico)', cat: 'gato', tag: 'Higiene', image: 'images/1 (80).jpeg' },
+      { name: 'ARENA CALABAZA CAFÉ (Bentonino Natural)', cat: 'gato', tag: 'Higiene', image: 'images/1 (81).jpeg' },
+      { name: 'MAIZ cat Arena ecológica (segunda presentación)', cat: 'gato', tag: 'Higiene', image: 'images/1 (82).jpeg' },
+      { name: 'Bentonita Arena Sanitaria para gatos', cat: 'gato', tag: 'Higiene', image: 'images/1 (84).jpeg' },
+      { name: 'roma Lega kattu Pasta di Antipasto', cat: 'gato', tag: 'Suplementos', image: 'images/1 (83).jpeg' }
+    ];
+
+    // --- Estado Global ---
+    let currentCat = 'all';
+    let searchQuery = '';
+    let currentPage = 1;
+    const itemsPerPage = 12;
+
+    // --- Renderizado del Catálogo ---
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      const pag = document.getElementById('pagination');
+
+      // Filtrado
+      let filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(q));
+      }
+
+      // 3. Lógica de Paginación
+      const totalPages = Math.ceil(filtered.length / itemsPerPage);
+      if (currentPage > totalPages) currentPage = totalPages || 1;
+
+      const start = (currentPage - 1) * itemsPerPage;
+      const currentItems = filtered.slice(start, start + itemsPerPage);
+
+      // 4. Dibujar Productos
+      if (currentItems.length === 0) {
+        grid.innerHTML = '<p style="color:var(--mid); grid-column:1/-1; text-align:center; padding: 3rem;">No se encontraron productos.</p>';
+        pag.innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = currentItems.map(p => `
+    <div class="product-card">
+      <div class="product-img-container">
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x300?text=Sin+Imagen'">
+      </div>
+      <div class="product-info">
+        <span class="product-tag">${p.tag}</span>
+        <h3>${p.name}</h3>
+      </div>
+    </div>
+  `).join('');
+
+      renderPaginationControls(totalPages);
+    }
+
+    function renderPaginationControls(total) {
+      const pag = document.getElementById('pagination');
+      if (total <= 1) { pag.innerHTML = ''; return; }
+
+      let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">‹</button>`;
+
+      for (let i = 1; i <= total; i++) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+
+      html += `<button class="page-btn" ${currentPage === total ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">›</button>`;
+      pag.innerHTML = html;
+    }
+
+    function setCategory(btn, cat) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = cat;
+      currentPage = 1;
+      renderProducts();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      currentPage = 1;
+      renderProducts();
+    }
+
+    function goToPage(p) {
+      currentPage = p;
+      renderProducts();
+      // Scroll suave al inicio del catálogo para que el usuario no se pierda
+      document.getElementById('productos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Carga inicial
+    renderProducts();
+
+    /**
+     * Módulo: Agendamiento de Citas (Integración con API)
+     * Consume el backend PHP para obtener disponibilidad real,
+     * optimizando las peticiones de red al traer el bloque mensual completo.
+     */
+
+    // Control del flujo de la cita
+    let apptData = { service: '', date: null, time: '', dateStr: '' };
+    const today = new Date(); // Instancia de objeto fecha en JS
+    let calYear = today.getFullYear(), calMonth = today.getMonth();
+
+    // Variable global (Caché local) para guardar la ocupación del mes actual y minimizar múltiples peticiones al backend
+    let ocupacionMes = {};
+
+    // --- Carga asincrónica de horarios ocupados ---
+    // Manejo de promesa con async/await para recuperar caché de disponibilidad
+    async function getOcupacionMes(anio, mes) {
+      const mesStr = `${anio}-${String(mes + 1).padStart(2, '0')}`; // Parseo de la fecha al formato YYYY-MM
+      try {
+        // Hacemos el llamado HTTP (GET) a nuestro endpoint REST en PHP
+        const response = await fetch(`api/citas.php?mes=${mesStr}`);
+        const data = await response.json(); // Deserializamos el response JSON a objeto de JS
+        ocupacionMes = data; // Guardamos en estructura de mapa/diccionario: { "YYYY-MM-DD": ["8:30 AM", ...] }
+      } catch (error) {
+        // Manejo de excepciones vía Try/Catch (Comportamiento defensivo del software)
+        console.error("Error obteniendo ocupación del mes (Verificar backend PHP):", error);
+        ocupacionMes = {};
+      }
+    }
+
+    // --- Renderizado del Calendario ---
+    async function renderCalendar() {
+      // Mostrar indicador de carga
+      document.getElementById('calGrid').innerHTML = '<div style="text-align:center; padding:20px;">Cargando calendario...</div>';
+
+      // Obtener ocupación del mes actual (una sola petición)
+      await getOcupacionMes(calYear, calMonth);
+
+      const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      document.getElementById('calTitle').textContent = monthNames[calMonth] + ' ' + calYear;
+
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+      const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+      let html = dayNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+      for (let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dt = new Date(calYear, calMonth, d);
+        const isPast = dt < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isToday = dt.toDateString() === today.toDateString();
+        const ds = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        const isSel = apptData.dateStr === ds;
+
+        // Usar datos de ocupación ya cargados
+        const ocupados = ocupacionMes[ds] || [];
+        const esDomingo = dt.getDay() === 0;
+        const totalSlots = esDomingo ? 7 : 21; // 7 domingo, 21 lunes-sábado
+        const hasSlots = !isPast && (ocupados.length < totalSlots);
+
+        const cls = ['cal-day', isPast ? 'past' : '', isToday ? 'today' : '', isSel ? 'selected' : '', hasSlots && !isSel ? 'has-slots' : ''].filter(Boolean).join(' ');
+        const click = !isPast ? `onclick="selectDate('${ds}',${d})"` : '';
+        html += `<div class="${cls}" ${click}>${d}</div>`;
+      }
+      document.getElementById('calGrid').innerHTML = html;
+    }
+
+    // --- Selección de día en el calendario ---
+    async function selectDate(ds, d) {
+      const dt = new Date(calYear, calMonth, d);
+      if (dt < new Date(today.getFullYear(), today.getMonth(), today.getDate())) return;
+
+      apptData.dateStr = ds;
+      apptData.date = dt;
+      apptData.time = '';
+
+      // Actualizar visualmente el calendario (resaltar el día)
+      await renderCalendar();
+
+      // Obtener ocupados de esta fecha (ya están en ocupacionMes, no hace falta fetch extra)
+      const ocupados = ocupacionMes[ds] || [];
+      const esDomingo = dt.getDay() === 0;
+      const todosHorarios = esDomingo
+        ? ['8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM']
+        : ['8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM'];
+
+      const disponibles = todosHorarios.filter(h => !ocupados.includes(h));
+      renderSlots(disponibles, ds);
+      document.getElementById('next2').disabled = true;
+    }
+
+    // --- Renderizado de Slots horarios ---
+    function renderSlots(disponibles, ds) {
+      const dt = new Date(ds + 'T12:00:00');
+      const dayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+      const monthNames = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+      document.getElementById('slotTitle').textContent = `Horarios — ${dayNames[dt.getDay()]} ${dt.getDate()} ${monthNames[dt.getMonth()]}`;
+
+      if (disponibles.length === 0) {
+        document.getElementById('slotsGrid').innerHTML = '<p class="no-date">❌ No hay horarios disponibles para este día.</p>';
+        return;
+      }
+
+      document.getElementById('slotsGrid').innerHTML = disponibles.map(slot => {
+        const sel = apptData.time === slot;
+        const cls = ['slot', sel ? 'selected' : ''].filter(Boolean).join(' ');
+        return `<div class="${cls}" onclick="selectSlot('${slot}')">${slot}</div>`;
+      }).join('');
+    }
+
+    // --- Selección individual de horario ---
+    function selectSlot(time) {
+      apptData.time = time;
+      document.querySelectorAll('.slot').forEach(el => el.classList.remove('selected'));
+      const slots = document.querySelectorAll('.slot');
+      for (let i = 0; i < slots.length; i++) {
+        if (slots[i].innerText.trim() === time) {
+          slots[i].classList.add('selected');
+          break;
+        }
+      }
+      document.getElementById('next2').disabled = false;
+    }
+
+    // --- Paginación del mes en el calendario ---
+    function changeMonth(dir) {
+      calMonth += dir;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCalendar();
+    }
+
+    // --- Navegación del wizard de Citas ---
+    async function goStep(n) {
+      for (let i = 1; i <= 4; i++) {
+        const s = document.getElementById('step' + i);
+        if (s) s.style.display = i === n ? 'block' : 'none';
+        const t = document.getElementById('tab' + i);
+        if (t) { t.classList.remove('active', 'done'); if (i === n) t.classList.add('active'); else if (i < n) t.classList.add('done'); }
+      }
+      if (n === 2) await renderCalendar();
+      if (n === 3) {
+        const dt = apptData.date;
+        const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        document.getElementById('apptSummary').innerHTML = `
+            <div class="summary-item"><span class="lbl">Servicio</span><span class="val">${apptData.service}</span></div>
+            <span class="summary-sep">|</span>
+            <div class="summary-item"><span class="lbl">Fecha</span><span class="val">${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}</span></div>
+            <span class="summary-sep">|</span>
+            <div class="summary-item"><span class="lbl">Hora</span><span class="val">${apptData.time}</span></div>
+        `;
+      }
+    }
+
+    /**
+     * Envío del formulario de citas al Backend.
+     * Crea un objeto DTO validándolo antes de inyectarlo mediante Fetch API.
+     */
+    async function confirmAppointment() {
+      const dt = apptData.date;
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const dateStr = `${dt.getDate()} de ${months[dt.getMonth()]} ${dt.getFullYear()}`;
+
+      // Arrow function para abreviar la extracción de valores del DOM
+      const v = id => document.getElementById(id).value.trim();
+
+      // Armamos el payload (Carga útil del request) en un objeto
+      const datosCita = {
+        servicio: apptData.service,
+        fecha: apptData.dateStr,
+        hora: apptData.time,
+        propietario: v('f_name'),
+        telefono: v('f_phone'),
+        email: v('f_email'),
+        mascota: v('f_pet'),
+        especie: document.getElementById('f_species').value,
+        raza: v('f_breed'),
+        notas: v('f_notes')
+      };
+
+      try {
+        // Ejecutamos la solicitud asíncrona añadiendo encabezados (headers) MIME de tipo JSON
+        const response = await fetch("api/citas.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datosCita) // Serializamos el DTO (Data Transfer Object)
+        });
+        const result = await response.json();
+
+        if (!response.ok) {
+          showToast(result.error || 'Error al agendar la cita');
+          return;
+        }
+
+        showToast('✅ Cita confirmada exitosamente');
+
+        document.getElementById('confirmDetails').innerHTML = `
+            <div class="confirm-row"><span class="key">Servicio</span><span class="val">${apptData.service}</span></div>
+            <div class="confirm-row"><span class="key">Fecha</span><span class="val">${dateStr}</span></div>
+            <div class="confirm-row"><span class="key">Hora</span><span class="val">${apptData.time}</span></div>
+            <div class="confirm-row"><span class="key">Paciente</span><span class="val">${v('f_pet')}${v('f_species') ? ' (' + v('f_species') + ')' : ''}</span></div>
+            <div class="confirm-row"><span class="key">Propietario</span><span class="val">${v('f_name')}</span></div>
+            <div class="confirm-row"><span class="key">Teléfono</span><span class="val">${v('f_phone')}</span></div>
+        `;
+
+        for (let i = 1; i <= 3; i++) {
+          document.getElementById('step' + i).style.display = 'none';
+          const t = document.getElementById('tab' + i);
+          if (t) { t.classList.remove('active'); t.classList.add('done'); }
+        }
+        document.getElementById('step4').style.display = 'block';
+
+      } catch (error) {
+        console.error("Error:", error);
+        showToast('❌ Error al conectar con el servidor');
+      }
+    }
+
+    // --- Selección del servicio base ---
+    function selectService(el, name) {
+      document.querySelectorAll('.service-opt').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      apptData.service = name;
+      document.getElementById('next1').disabled = false;
+    }
+
+    // --- Validación básica de formulario de mascota/propietario ---
+    function validateForm() {
+      const ok = ['f_name', 'f_phone', 'f_email', 'f_pet'].every(id => document.getElementById(id).value.trim());
+      const emailOk = /\S+@\S+\.\S+/.test(document.getElementById('f_email').value);
+      document.getElementById('next3').disabled = !(ok && emailOk);
+    }
+
+    // --- Resetear el flujo de citas a origen ---
+    function resetAppointment() {
+      apptData = { service: '', date: null, time: '', dateStr: '' };
+      ['f_name', 'f_phone', 'f_email', 'f_pet', 'f_notes', 'f_breed'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      const species = document.getElementById('f_species');
+      if (species) species.value = '';
+      document.getElementById('step4').style.display = 'none';
+      document.getElementById('next1').disabled = true;
+      document.getElementById('next2').disabled = true;
+      document.getElementById('next3').disabled = true;
+      goStep(1);
+      document.querySelectorAll('.service-opt').forEach(e => e.classList.remove('selected'));
+    }
+
+    // --- Notification Toasts ---
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // --- Widget de Soporte / WhatsApp Automático ---
+    (function () {
+      const bubble = document.getElementById('waBubble');
+      const btn = document.getElementById('waBtn');
+      // Mostrar burbuja después de 3 segundos
+      setTimeout(() => { bubble.classList.add('show'); }, 3000);
+      // Ocultar burbuja al hacer click en el botón
+      btn.addEventListener('click', () => { bubble.classList.remove('show'); });
+      // Alternar burbuja al pasar el mouse si ya fue cerrada
+      let hidden = false;
+      btn.addEventListener('mouseenter', () => { if (!hidden) bubble.classList.add('show'); });
+      // Cambiar emoji de la mascota cada pocos segundos
+      const mascotas = ['🐶', '🐱', '🐾', '🐕', '🐈'];
+      let idx = 0;
+      setInterval(() => {
+        idx = (idx + 1) % mascotas.length;
+        btn.querySelector('.wa-mascot-face').textContent = mascotas[idx];
+      }, 2500);
+    })();
+
+    // --- Animaciones Scroll (Intersection Observer API) ---
+    (function () {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, entry.target.dataset.delay || 0);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+    })();
+
+    // --- Contadores Animados (Tarjetas numéricas) ---
+    (function () {
+      function animateCounter(el, target, suffix, duration) {
+        let start = 0;
+        const step = target / (duration / 16);
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= target) { start = target; clearInterval(timer); }
+          el.textContent = (suffix === 'K' ? '+' + Math.floor(start / 1000) + 'K' :
+            suffix === '+' ? '+' + Math.floor(start) : Math.floor(start) + ' años');
+        }, 16);
+      }
+      const stat1 = document.getElementById('stat1');
+      const stat2 = document.getElementById('stat2');
+      if (stat1) animateCounter(stat1, 300, '+', 1800);
+      if (stat2) animateCounter(stat2, 1000, 'K', 2000);
+    })();
+
+    // --- Efecto Header Activo (Scroll Event Listener) ---
+    (function () {
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) {
+          nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+          nav.style.background = 'rgba(249,244,236,0.97)';
+        } else {
+          nav.style.boxShadow = 'none';
+          nav.style.background = 'rgba(249,244,236,0.92)';
+        }
+      }, { passive: true });
+    })();
+
+  </script>
+</body>
+
+</html>

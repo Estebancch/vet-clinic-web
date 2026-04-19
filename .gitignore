@@ -1,0 +1,17 @@
+# Entorno de desarrollo / SO
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Por seguridad
+.env
+*.sql
+
+# Logs
+error_log
+
+# Base de datos (Informacion clientes)
+public_html/api/citas.json
+citas.json
